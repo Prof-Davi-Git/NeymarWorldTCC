@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Conheça a demo em desenvolvimento de Neymar World, uma aventura de plataforma em pixel art inspirada no Rio.">
+  <title>Neymar World | Demo</title>
+  <link rel="icon" href="assets/icone.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <script src="configuracao.js" defer></script>
+  <script src="assets/idiomas.js" defer></script>
+  <script src="assets/i18n.js" defer></script>
+  <script src="assets/preferencias.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body id="inicio">
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <div class="header-brand-group">
+        <a class="brand" href="#inicio" aria-label="Neymar World, início">
+          <img src="assets/wordmark.webp" alt="" width="283" height="136">
+        </a>
+        <div class="header-social" id="redes-topo" role="group" aria-label="Redes sociais" hidden>
+          <a class="header-social-link" data-rede-topo="instagram" aria-label="Instagram do Neymar World"
+             title="Instagram" target="_blank" rel="noopener noreferrer" hidden>
+            <span class="social-icon social-icon--instagram" aria-hidden="true"></span>
+          </a>
+          <a class="header-social-link" data-rede-topo="youtube" aria-label="YouTube do Neymar World"
+             title="YouTube" target="_blank" rel="noopener noreferrer" hidden>
+            <span class="social-icon social-icon--youtube" aria-hidden="true"></span>
+          </a>
+        </div>
+      </div>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navegacao">
+        <span class="menu-icon" aria-hidden="true"></span>
+        Menu
+      </button>
+
+      <nav class="nav" id="navegacao" aria-label="Navegação principal">
+        <details class="nav-item" name="menu-principal">
+          <summary>Informações do jogo</summary>
+          <div class="nav-panel">
+            <a href="#sobre">Sobre o jogo</a>
+            <button type="button" data-dialog="guia">Guia para iniciantes</button>
+            <a href="#cenarios">Cenários</a>
+            <button type="button" data-dialog="faq">Requisitos e dúvidas</button>
+          </div>
+        </details>
+        <details class="nav-item" name="menu-principal">
+          <summary>Mídia</summary>
+          <div class="nav-panel">
+            <a href="#midia">Imagens do jogo</a>
+            <a href="#cenarios">Cenários</a>
+            <button type="button" data-dialog="video">Vídeo de abertura</button>
+          </div>
+        </details>
+        <details class="nav-item" name="menu-principal">
+          <summary>Notícias</summary>
+          <div class="nav-panel">
+            <a href="#noticias">Últimas notícias</a>
+            <button type="button" data-dialog="demo">A demo e as próximas ideias</button>
+            <button type="button" data-dialog="calendario">Calendário e lançamento</button>
+            <button type="button" data-dialog="bastidores">Bastidores</button>
+          </div>
+        </details>
+        <details class="nav-item" name="menu-principal">
+          <summary>Suporte</summary>
+          <div class="nav-panel">
+            <button type="button" data-dialog="suporte">Ajuda com a demo</button>
+            <button type="button" data-dialog="faq">Perguntas frequentes</button>
+            <button type="button" data-dialog="contato">Formulário de contato</button>
+          </div>
+        </details>
+        <details class="nav-item" name="menu-principal">
+          <summary>Social</summary>
+          <div class="nav-panel">
+            <a href="#social">Redes do jogo</a>
+            <button type="button" data-dialog="sugestao">Sugerir personagem</button>
+            <a href="#creditos">Créditos</a>
+          </div>
+        </details>
+      </nav>
+
+      <div class="header-actions">
+        <button class="button-tools" type="button" data-dialog="preferencias" aria-label="Acessibilidade e idiomas" title="Acessibilidade e idiomas">
+          <span class="header-action-icon" aria-hidden="true">⚙</span>
+          <span class="header-action-label">Preferências</span>
+        </button>
+        <button class="button-account" type="button" data-dialog="conta" aria-label="Entrar na conta" title="Entrar na conta" data-dynamic-i18n>
+          <span class="header-action-icon" aria-hidden="true">◉</span>
+          <span class="header-action-label" id="account-label">Entrar</span>
+        </button>
+        <button class="button button--header" type="button" data-demo>Entrar na demo</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="titulo">
+      <video class="hero-video" id="video-banner" poster="assets/banner-poster.webp" preload="none" muted loop playsinline aria-hidden="true">
+        <source src="assets/banner.mp4" type="video/mp4">
+      </video>
+      <div class="hero-shade"></div>
+      <div class="shell hero-inner">
+        <div class="hero-copy">
+          <h1 id="titulo"><img src="assets/wordmark.webp" alt="Neymar World" width="283" height="136" fetchpriority="high"></h1>
+          <span class="demo-tag">Demo em desenvolvimento</span>
+          <p>Uma aventura de plataforma pelo Rio.</p>
+          <button class="button button--large" type="button" data-demo>
+            Entrar na demo <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+      <div class="hero-controls">
+        <audio id="audio-ambiente" src="assets/ambiente-praia.mp3" preload="none" loop></audio>
+        <button class="audio-toggle" type="button" aria-controls="audio-ambiente" aria-pressed="false" hidden>
+          <span aria-hidden="true">♪</span>
+          <span>Som da praia</span>
+        </button>
+        <button class="video-toggle" data-dynamic-i18n type="button" aria-controls="video-banner" aria-label="Reproduzir animação do banner" hidden>
+          <span class="play-icon" aria-hidden="true"></span>
+        </button>
+        <span class="visually-hidden" id="audio-status" data-dynamic-i18n role="status"></span>
+      </div>
+    </section>
+
+    <div class="wave-divider">
+      <a class="scroll-link" href="#noticias" aria-label="Ir para notícias"><span aria-hidden="true"></span></a>
+    </div>
+
+    <section class="section section--sand" id="noticias" aria-labelledby="titulo-noticias">
+      <div class="shell">
+        <h2 class="section-title" id="titulo-noticias">Notícias</h2>
+        <!-- NOTÍCIAS: edite os títulos e as descrições dos cartões abaixo. -->
+        <div class="news-grid">
+          <button class="news-card" type="button" data-dialog="demo">
+            <img src="assets/noticia-demo.webp" alt="" width="640" height="360" loading="lazy">
+            <span class="news-copy">
+              <strong>A demo</strong>
+              <span>Veja o estágio da demo e as ideias que estamos estudando.</span>
+            </span>
+            <span class="card-arrow" aria-hidden="true">↗</span>
+          </button>
+          <a class="news-card" href="#cenarios">
+            <img src="assets/noticia-fases.webp" alt="" width="640" height="360" loading="lazy">
+            <span class="news-copy">
+              <strong>As fases</strong>
+              <span>Veja os primeiros cenários do jogo.</span>
+            </span>
+            <span class="card-arrow" aria-hidden="true">↓</span>
+          </a>
+          <button class="news-card" type="button" data-dialog="bastidores">
+            <img src="assets/noticia-bastidores.webp" alt="" width="640" height="360" loading="lazy">
+            <span class="news-copy">
+              <strong>Bastidores</strong>
+              <span>Conheça a direção de arte em pixel art.</span>
+            </span>
+            <span class="card-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="sobre" aria-labelledby="titulo-sobre">
+      <div class="shell about-grid">
+        <div>
+          <h2 class="section-title" id="titulo-sobre">Sobre o jogo</h2>
+          <p>Pule obstáculos, colete moedas e explore o Rio em uma aventura de plataforma em pixel art. O jogo está sendo construído e esta é a apresentação da demo.</p>
+          <button class="button" type="button" data-dialog="guia">
+            Conheça o jogo <span aria-hidden="true">→</span>
+          </button>
+        </div>
+        <figure class="about-image">
+          <img src="assets/previa-fase.webp" alt="Prévia ilustrada de uma fase com moedas e caixas na praia do Rio" width="658" height="206" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--sand" id="midia" aria-labelledby="titulo-midia">
+      <div class="shell">
+        <h2 class="section-title" id="titulo-midia">Mídia e cenários</h2>
+        <div class="gallery-grid" id="cenarios">
+          <figure>
+            <img src="assets/cenario-rio.webp" alt="Praia do Rio com mar azul, coqueiros e montanhas em pixel art" width="640" height="360" loading="lazy">
+            <figcaption>Praia do Rio</figcaption>
+            <a class="wallpaper-link" href="assets/wallpaper-rio.jpg" download>Baixar papel de parede da praia <span aria-hidden="true">↓</span></a>
+          </figure>
+          <figure>
+            <img src="assets/cenario-vale.webp" alt="Cachoeiras entre rochas e mata tropical em pixel art" width="640" height="360" loading="lazy">
+            <figcaption>Vale das Cachoeiras</figcaption>
+            <a class="wallpaper-link" href="assets/wallpaper-vale.jpg" download>Baixar papel de parede do vale <span aria-hidden="true">↓</span></a>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section class="section section--dark community-section" id="comunidade" aria-labelledby="titulo-comunidade">
+      <div class="shell">
+        <h2 class="section-title" id="titulo-comunidade">Comunidade</h2>
+        <div class="community-grid">
+          <article class="community-card">
+            <h3>Sugira um personagem</h3>
+            <p>Conte quem você gostaria de ver no jogo e como ele poderia participar.</p>
+            <button class="button" type="button" data-dialog="sugestao">Enviar sugestão <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="community-card">
+            <h3>Calendário e lançamento</h3>
+            <p id="resumo-lancamento" data-dynamic-i18n>Data de lançamento a definir.</p>
+            <button class="button" type="button" data-dialog="calendario">Ver calendário <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="community-card">
+            <h3>Perguntas frequentes</h3>
+            <p>Consulte os controles, os requisitos e o que esperar da demo.</p>
+            <button class="button" type="button" data-dialog="faq">Ver perguntas <span aria-hidden="true">→</span></button>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <a class="brand footer-brand" href="#inicio" aria-label="Neymar World, voltar ao início">
+          <img src="assets/wordmark.webp" alt="" width="283" height="136">
+        </a>
+        <section id="social" aria-labelledby="titulo-social">
+          <h2 id="titulo-social">Social</h2>
+          <p id="social-status">Links das redes em breve.</p>
+          <ul class="social-links" id="redes-sociais" aria-label="Redes do jogo" hidden></ul>
+        </section>
+        <section id="suporte-rodape" aria-labelledby="titulo-suporte">
+          <h2 id="titulo-suporte">Suporte</h2>
+          <button class="text-button" type="button" data-dialog="suporte">Central de ajuda <span aria-hidden="true">↗</span></button>
+        </section>
+        <section class="rating" aria-labelledby="titulo-classificacao">
+          <h2 id="titulo-classificacao">Classificação indicativa</h2>
+          <div class="rating-mark">
+            <span class="rating-age" aria-hidden="true">10</span>
+            <p data-classificacao data-dynamic-i18n>10 anos</p>
+          </div>
+        </section>
+      </div>
+      <section class="credits" id="creditos" aria-labelledby="titulo-creditos">
+        <h2 id="titulo-creditos">Criadores do jogo</h2>
+        <ul id="lista-creditos" data-dynamic-i18n>
+          <li>Ivan</li>
+          <li>Ryan</li>
+        </ul>
+      </section>
+      <div class="footer-legal">
+        <span>Neymar World</span>
+        <div class="legal-links">
+          <button class="text-button" type="button" data-dialog="privacidade">Política de privacidade</button>
+          <button class="text-button" type="button" data-dialog="termos">Termos de uso</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GUIA PARA INICIANTES: edite os títulos e parágrafos deste bloco. -->
+  <dialog class="dialog dialog--guide" id="guia" aria-labelledby="guia-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar guia" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="guia-titulo">Guia para iniciantes</h2>
+      <p class="dialog-intro">Conheça o Neymar World e comece pela demo.</p>
+      <img class="dialog-image" src="assets/previa-fase.webp" alt="Prévia ilustrada da fase da praia, com moedas e obstáculos" width="658" height="206" loading="lazy">
+      <h3>Como jogar</h3>
+      <p>Pule obstáculos, colete moedas e poderes pelo caminho, derrote os inimigos e avance pelos cenários.</p>
+      <h3>Primeira fase</h3>
+      <p>Na praia do Rio, observe a posição das caixas e das plataformas para escolher por onde passar, derrote os inimigos e prossiga.</p>
+      <h3>Controles</h3>
+      <ul>
+        <li><kbd>D</kbd> — Andar para frente.</li>
+        <li><kbd>A</kbd> — Andar para trás.</li>
+        <li><kbd>W</kbd> ou <kbd>Espaço</kbd> — Pular.</li>
+        <li><kbd>S</kbd> — Agachar.</li>
+        <li><kbd>X</kbd> — Usar o superpoder para chutar a bola quando estiver no chão.</li>
+      </ul>
+      <h3>Como cabecear</h3>
+      <p>Pule com <kbd>W</kbd> ou <kbd>Espaço</kbd> e aperte <kbd>X</kbd> enquanto estiver no ar para cabecear a bola.</p>
+      <button class="button" type="button" data-demo>Entrar na demo <span aria-hidden="true">→</span></button>
+    </div>
+  </dialog>
+
+  <!-- SUPORTE: edite as perguntas e respostas desta janela. -->
+  <dialog class="dialog" id="suporte" aria-labelledby="suporte-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar suporte" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="suporte-titulo">Suporte</h2>
+      <h3>Onde acesso a demo?</h3>
+      <p>Use o botão <strong>Entrar na demo</strong> no topo da página para ver se a demonstração está disponível.</p>
+      <h3>O que informar ao relatar um problema?</h3>
+      <p>Descreva o que aconteceu, em qual fase e em qual dispositivo. Se apareceu uma mensagem de erro, inclua o texto dela.</p>
+      <div class="dialog-actions">
+        <button class="button" type="button" data-dialog="contato">Abrir formulário <span aria-hidden="true">→</span></button>
+        <button class="button" type="button" data-dialog="faq">Perguntas frequentes</button>
+        <a class="button" id="contato-suporte" hidden>Enviar e-mail <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog--guide" id="demo" aria-labelledby="demo-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar informações da demo" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="demo-titulo">Demo do Neymar World</h2>
+      <p class="dialog-intro"><strong>Neymar World é uma demonstração em desenvolvimento.</strong> A demo apresenta a proposta do jogo. As fases, os personagens e as mecânicas podem mudar enquanto a equipe constrói as próximas versões.</p>
+      <p id="demo-status" data-dynamic-i18n>O link para jogar será divulgado aqui quando a demonstração estiver disponível.</p>
+      <button class="button" id="jogar-demo" type="button" data-demo hidden>Jogar a demonstração <span aria-hidden="true">→</span></button>
+
+      <h3>Ideias de implementação de novos personagens</h3>
+      <p>Estes são conceitos ilustrados inspirados em pessoas do futebol. A equipe está explorando como cada papel poderia funcionar em futuras versões da demo.</p>
+      <div class="character-grid">
+        <article class="character-card">
+          <img src="assets/conceito-ancelotti.webp" alt="Conceito em pixel art de Carlo Ancelotti como treinador" width="640" height="480" loading="lazy">
+          <h4>Carlo Ancelotti</h4>
+          <p>Treinador que ensina movimentos e propõe desafios de treino.</p>
+        </article>
+        <article class="character-card">
+          <img src="assets/conceito-vini.webp" alt="Conceito em pixel art de Vini Júnior" width="640" height="480" loading="lazy">
+          <h4>Vini Júnior</h4>
+          <p>Personagem ágil para explorar arrancadas e dribles.</p>
+        </article>
+        <article class="character-card">
+          <img src="assets/conceito-haaland.webp" alt="Conceito em pixel art de Erling Haaland" width="640" height="480" loading="lazy">
+          <h4>Erling Haaland</h4>
+          <p>Atacante com chute potente e desafios de finalização.</p>
+        </article>
+        <article class="character-card">
+          <img src="assets/conceito-depay.webp" alt="Conceito em pixel art de Memphis Depay com uniforme preto e branco" width="640" height="480" loading="lazy">
+          <h4>Memphis Depay</h4>
+          <p>Rival de fase inspirado no Corinthians, em um duelo de futebol com obstáculos.</p>
+        </article>
+      </div>
+      <h3>Outras ideias em estudo</h3>
+      <ul>
+        <li>Um modo para dois jogadores no mesmo computador, com desafios em dupla.</li>
+        <li>Uma opção para jogar pela internet, dependendo dos testes de conexão e sincronização.</li>
+        <li>Suporte a controle e configuração de botões, com o teclado como referência atual.</li>
+      </ul>
+      <div class="dialog-actions">
+        <button class="button" type="button" data-dialog="sugestao">Sugerir personagem <span aria-hidden="true">→</span></button>
+        <button class="button" type="button" data-dialog="guia">Conheça o jogo</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="bastidores" aria-labelledby="bastidores-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar bastidores" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="bastidores-titulo">Bastidores</h2>
+      <p>O visual do Neymar World mistura pixel art com paisagens inspiradas no Rio, da orla ao vale de cachoeiras.</p>
+      <img class="dialog-image" src="assets/cenario-vale.webp" alt="Estudo em pixel art do vale de cachoeiras" width="640" height="360" loading="lazy">
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog--guide" id="video" aria-labelledby="video-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar vídeo" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="video-titulo">Vídeo de abertura</h2>
+      <video class="dialog-video" controls playsinline preload="none" poster="assets/banner-poster.webp" aria-label="Animação em pixel art do cenário do Rio">
+        <source src="assets/banner.mp4" type="video/mp4">
+      </video>
+    </div>
+  </dialog>
+
+
+  <dialog class="dialog" id="faq" aria-labelledby="faq-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar perguntas frequentes" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="faq-titulo">Perguntas frequentes</h2>
+      <div class="faq-list">
+        <details>
+          <summary>Qual é o estágio do jogo?</summary>
+          <p>O Neymar World é uma demo em desenvolvimento. A janela <strong>A demo</strong>, em Notícias, reúne o estado atual e as ideias em estudo.</p>
+        </details>
+        <details>
+          <summary>Quais são os requisitos para jogar?</summary>
+          <p id="requisitos-jogo" data-dynamic-i18n>Os requisitos mínimos e as plataformas da demo serão divulgados quando a equipe terminar os testes. Os controles descritos no guia usam teclado.</p>
+        </details>
+        <details>
+          <summary>Já é possível jogar em dupla ou com controle?</summary>
+          <p>Modo em dupla, conexão pela internet e suporte a controle são ideias em estudo. O guia descreve os comandos de teclado conhecidos.</p>
+        </details>
+        <details>
+          <summary>Como envio uma ideia ou aviso de erro?</summary>
+          <p>Use o formulário de sugestões para ideias de personagens, ou o formulário de contato para descrever dúvidas e problemas.</p>
+        </details>
+      </div>
+      <div class="dialog-actions">
+        <button class="button" type="button" data-dialog="guia">Ver controles</button>
+        <button class="button" type="button" data-dialog="contato">Falar com a equipe</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="calendario" aria-labelledby="calendario-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar calendário" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="calendario-titulo">Calendário e lançamento</h2>
+      <p id="lancamento-status" data-dynamic-i18n>Data de lançamento a definir.</p>
+      <div class="launch-countdown" id="contagem" aria-label="Tempo até o lançamento" hidden>
+        <span><strong data-unidade="dias">0</strong> Dias</span>
+        <span><strong data-unidade="horas">00</strong> Horas</span>
+        <span><strong data-unidade="minutos">00</strong> Minutos</span>
+        <span><strong data-unidade="segundos">00</strong> Segundos</span>
+      </div>
+      <h3>Próximos eventos</h3>
+      <p id="eventos-status" data-dynamic-i18n>As datas de eventos serão divulgadas aqui.</p>
+      <ol class="event-list" id="lista-eventos" data-dynamic-i18n hidden></ol>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="sugestao" aria-labelledby="sugestao-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar sugestão" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="sugestao-titulo">Sugira um personagem</h2>
+      <p>Que jogador, treinador ou rival você gostaria de ver? Conte como seria a participação dele no jogo.</p>
+      <form class="community-form" action="/api/mensagens" method="post" data-mensagem="sugestao">
+        <label>Seu nome <input name="nome" autocomplete="name" required minlength="2" maxlength="80"></label>
+        <label>E-mail (opcional) <input name="email" type="email" autocomplete="email" maxlength="254"></label>
+        <label>Nome do personagem (opcional) <input name="personagem" maxlength="120"></label>
+        <label>Sua ideia <textarea name="mensagem" required minlength="10" maxlength="2000" rows="4"></textarea></label>
+        <button class="button" type="submit">Enviar sugestão</button>
+        <p class="form-status" role="status" data-dynamic-i18n></p>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="contato" aria-labelledby="contato-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar contato" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="contato-titulo">Fale com a equipe</h2>
+      <p>Envie uma dúvida, um comentário ou um relato de problema. Para relatos, diga em qual fase e em qual dispositivo aconteceu.</p>
+      <form class="community-form" action="/api/mensagens" method="post" data-mensagem="contato">
+        <label>Seu nome <input name="nome" autocomplete="name" required minlength="2" maxlength="80"></label>
+        <label>E-mail para resposta <input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+        <label>Mensagem <textarea name="mensagem" required minlength="10" maxlength="2000" rows="4"></textarea></label>
+        <button class="button" type="submit">Enviar mensagem</button>
+        <p class="form-status" role="status" data-dynamic-i18n></p>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="preferencias" aria-labelledby="preferencias-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar preferências" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="preferencias-titulo">Acessibilidade e idiomas</h2>
+      <div class="preferences-grid">
+        <label for="pref-idioma">Idioma do site
+          <select id="pref-idioma">
+            <option lang="pt-BR" value="pt-BR">Português (Brasil)</option>
+            <option lang="en" value="en">English</option>
+            <option lang="es" value="es">Español</option>
+            <option lang="fr" value="fr">Français</option>
+            <option lang="de" value="de">Deutsch</option>
+            <option lang="it" value="it">Italiano</option>
+            <option lang="ja" value="ja">日本語</option>
+            <option lang="ko" value="ko">한국어</option>
+            <option lang="zh-Hans" value="zh">简体中文</option>
+            <option lang="ar" value="ar">العربية</option>
+          </select>
+        </label>
+        <label for="pref-tema">Tema
+          <select id="pref-tema">
+            <option value="sistema">Usar tema do dispositivo</option>
+            <option value="claro">Claro</option>
+            <option value="escuro">Escuro</option>
+          </select>
+        </label>
+        <label><input id="pref-contraste" type="checkbox"> Alto contraste</label>
+        <label><input id="pref-texto" type="checkbox"> Texto maior</label>
+        <label><input id="pref-movimento" type="checkbox"> Reduzir animações</label>
+        <label><input id="pref-cursor" type="checkbox"> Usar cursor padrão</label>
+      </div>
+      <h3>Narrador do site</h3>
+      <p>O narrador lê a seção que você está vendo. As vozes disponíveis dependem do seu navegador e do dispositivo.</p>
+      <div class="preferences-actions">
+        <button class="button" type="button" id="pref-narrar">Ler em voz alta</button>
+        <button class="button" type="button" id="pref-parar" disabled>Parar narração</button>
+      </div>
+      <p id="narrador-status" role="status" data-dynamic-i18n></p>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="conta" aria-labelledby="conta-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar conta" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="conta-titulo">Conta do jogador</h2>
+      <p id="conta-demo-aviso" hidden>Entre ou crie uma conta para acessar a demonstração.</p>
+
+      <div id="conta-visitante">
+        <div class="account-tabs" role="group" aria-label="Escolha uma opção de conta">
+          <button type="button" data-account-form="entrar" aria-pressed="true">Entrar</button>
+          <button type="button" data-account-form="cadastro" aria-pressed="false">Criar conta</button>
+        </div>
+        <form class="community-form account-fields" data-account="entrar" method="post" action="/api/conta/entrar">
+          <label>E-mail <input name="email" type="email" autocomplete="username" required maxlength="254"></label>
+          <label>Senha <input name="senha" type="password" autocomplete="current-password" required maxlength="128"></label>
+          <button class="button" type="submit">Entrar</button>
+        </form>
+        <form class="community-form account-fields" data-account="cadastro" method="post" action="/api/conta/cadastro" hidden>
+          <label>Seu nome <input name="nome" autocomplete="name" required minlength="2" maxlength="80"></label>
+          <label>E-mail <input name="email" type="email" autocomplete="username" required maxlength="254"></label>
+          <label>Senha <input name="senha" type="password" autocomplete="new-password" required minlength="8" maxlength="128" aria-describedby="senha-dica"></label>
+          <p id="senha-dica">Escolha uma senha de pelo menos 8 caracteres.</p>
+          <button class="button" type="submit">Criar conta</button>
+        </form>
+      </div>
+
+      <div id="conta-logada" hidden>
+        <p id="conta-saudacao" data-dynamic-i18n></p>
+        <p id="conta-email" dir="auto" data-dynamic-i18n></p>
+        <div class="dialog-actions">
+          <button class="button" type="button" data-demo>Entrar na demo</button>
+          <button class="button" id="sair-conta" type="button">Sair da conta</button>
+        </div>
+      </div>
+      <p class="form-status account-status" id="conta-status" role="status" data-dynamic-i18n></p>
+    </div>
+  </dialog>
+
+  <!-- PRIVACIDADE E TERMOS: revise estes textos de acordo com a versão publicada. -->
+  <dialog class="dialog" id="privacidade" aria-labelledby="privacidade-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar política de privacidade" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="privacidade-titulo">Política de privacidade</h2>
+      <p>Quando você envia uma sugestão ou mensagem de contato, o site guarda o nome, o texto e o e-mail que você informar para a equipe ler e responder. A equipe pode receber uma cópia por e-mail por meio do serviço de envio configurado.</p>
+      <p>O e-mail é opcional nas sugestões e necessário para receber resposta pelo formulário de contato. Envie somente os dados que a equipe precisa para entender a mensagem.</p>
+      <p>Para criar uma conta, informe seu nome, e-mail e senha. O servidor guarda uma versão protegida da senha e usa um cookie de sessão para manter seu acesso. As preferências de acessibilidade e idioma são salvas neste navegador.</p>
+      <p>Ao acessar a demo ou uma rede social hospedada em outro serviço, consulte a política de privacidade do destino.</p>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="termos" aria-labelledby="termos-titulo">
+    <form class="dialog-close" method="dialog">
+      <button class="close-button" aria-label="Fechar termos de uso" autofocus>×</button>
+    </form>
+    <div class="dialog-content">
+      <h2 class="section-title" id="termos-titulo">Termos de uso</h2>
+      <p>Este site apresenta o projeto Neymar World. O conteúdo da demonstração pode mudar durante o desenvolvimento.</p>
+      <p>Os requisitos e as instruções específicos da demo serão informados pela equipe do jogo.</p>
+    </div>
+  </dialog>
+</body>
+</html>
