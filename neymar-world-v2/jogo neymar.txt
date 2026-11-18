@@ -1,0 +1,16 @@
+# Copie este arquivo como .env para configurar o servidor no seu computador.
+HOST=127.0.0.1
+PORT=3000
+
+# Em hospedagem, use um volume persistente para guardar o banco.
+SQLITE_PATH=./dados/mensagens.sqlite
+
+# Preencha os três campos para receber uma notificação por mensagem.
+# EMAIL_REMETENTE usa um endereço autorizado no Resend.
+RESEND_API_KEY=re_hTKeZvek_C55HKnjggwFtvH3YzhvB749z
+EMAIL_REMETENTE=onboarding@resend.dev
+EMAIL_DESTINO=neymarworld.ofc@gmail.com
+
+# Em hospedagem com proxy reverso, ajuste ao número de proxies confiáveis
+# que acrescentam seus endereços ao cabeçalho X-Forwarded-For.
+PROXY_HOPS=0
