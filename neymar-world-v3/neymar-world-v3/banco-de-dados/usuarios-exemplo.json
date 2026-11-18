@@ -1,0 +1,27 @@
+[
+  {
+    "id": "exemplo-1",
+    "nome": "Ana Exemplo",
+    "email": "ana@neymarworld.example"
+  },
+  {
+    "id": "exemplo-2",
+    "nome": "Bruno Exemplo",
+    "email": "bruno@neymarworld.example"
+  },
+  {
+    "id": "exemplo-3",
+    "nome": "Carla Exemplo",
+    "email": "carla@neymarworld.example"
+  },
+  {
+    "id": "exemplo-4",
+    "nome": "Daniel Exemplo",
+    "email": "daniel@neymarworld.example"
+  },
+  {
+    "id": "exemplo-5",
+    "nome": "Fernanda Exemplo",
+    "email": "fernanda@neymarworld.example"
+  }
+]
