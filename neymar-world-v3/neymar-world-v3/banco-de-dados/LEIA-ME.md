@@ -2,6 +2,9 @@
 
 ## ATUALIZAÇÃO 18/11 — Demonstração sem servidor
 
+**Correção de login:** agora o site detecta quando foi aberto pelo **Live Server** do VSCode (ou hospedagem apenas estática) e utiliza o login local do JSON. Antes ele tentava a API `/api/conta` inexistente nesse modo e mostrava erro. Quando a API do servidor Node está disponível, o login original com SQLite permanece ativo.
+
+
 Esta atividade foi feita para o professor abrir **index.html diretamente**, sem terminal, instalação ou comandos. A **V3 original também possui um servidor real**, mas o modo demonstrativo não depende dele.
 
 ### Arquivos da atividade
