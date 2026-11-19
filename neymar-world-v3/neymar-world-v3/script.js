@@ -446,6 +446,8 @@ const accountTabs = [...accountGuest.querySelectorAll("[data-account-form]")];
 const accountLogout = document.querySelector("#sair-conta");
 
 let accountUser = null;
+// ATUALIZAÇÃO 18/11 - detectar se existe API, inclusive no Live Server.
+let accountMode = location.protocol === "file:" ? "local" : "unknown";
 let accountCheck;
 let accountBusy = false;
 let demoRequested = false;
@@ -482,8 +484,9 @@ function showAccount(trigger, wantsDemo) {
 }
 
 function checkAccount() {
-  // ATUALIZAÇÃO 18/11: abrir index.html direto utiliza apenas a demonstração local.
-  if (location.protocol === "file:") {
+  // ATUALIZAÇÃO 18/11 - file://, Live Server e GitHub Pages usam o modo
+  // demonstrativo; o servidor Node original continua com seu SQLite.
+  if (accountMode === "local") {
     accountUser = window.NW_AUTH_LOCAL?.current() || null;
     renderAccount();
     return Promise.resolve(true);
@@ -492,9 +495,19 @@ function checkAccount() {
 
   accountCheck = fetch("/api/conta", { cache: "no-store" })
     .then(async (response) => {
+      const type = response.headers.get("content-type") || "";
+      // Um servidor estático pode responder 404 ou devolver index.html.
+      // Isso significa que a API não existe nesta publicação.
+      if (response.status === 404 || (response.ok && !type.includes("application/json"))) {
+        accountMode = "local";
+        accountUser = window.NW_AUTH_LOCAL?.current() || null;
+        renderAccount();
+        return true;
+      }
       if (!response.ok) return false;
       const data = await response.json();
       if (!Object.hasOwn(data, "usuario")) return false;
+      accountMode = "server";
       accountUser = data.usuario;
       renderAccount();
       return true;
@@ -525,9 +538,10 @@ const accountErrors = {
 
 async function updateAccount(path, fields, controls, success) {
   if (accountBusy) return false;
-  // ATUALIZAÇÃO 18/11: o formulário original é preservado; só muda a
-  // origem dos dados quando index.html é aberto diretamente pelo navegador.
-  if (location.protocol === "file:") {
+  // ATUALIZAÇÃO 18/11 - esperar a identificação da API antes de decidir.
+  // Assim o login dos usuários JSON funciona também com Live Server.
+  const available = await checkAccount();
+  if (accountMode === "local") {
     accountBusy = true;
     controls.forEach(control => { control.disabled = true; });
     try {
@@ -541,10 +555,18 @@ async function updateAccount(path, fields, controls, success) {
       renderAccount();
       setAccountStatus(success, "success");
       return true;
+    } catch (error) {
+      console.error("Erro no cadastro/login local:", error);
+      setAccountStatus("Não foi possível acessar a conta neste navegador.", "error");
+      return false;
     } finally {
       accountBusy = false;
       controls.forEach(control => { control.disabled = false; });
     }
+  }
+  if (!available) {
+    setAccountStatus("Não foi possível conectar ao serviço de contas.", "error");
+    return false;
   }
 
   accountBusy = true;
