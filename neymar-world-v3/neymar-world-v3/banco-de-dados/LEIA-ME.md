@@ -1,37 +1,41 @@
 # Banco de Dados do SITE — Neymar World V3
 
-**Atividade didática do TCC. Não altera o jogo, o login nem o servidor.**
+## ATUALIZAÇÃO 18/11 — Demonstração sem servidor
 
-## Arquivos adicionados
+Esta atividade foi feita para o professor abrir **index.html diretamente**, sem terminal, instalação ou comandos. A **V3 original também possui um servidor real**, mas o modo demonstrativo não depende dele.
 
-- `modelo-site.sql` — representa as três tabelas que o servidor **já usa** no SQLite: `contas`, `sessoes` e `mensagens`. Contém `CREATE TABLE` e exemplos de `SELECT`. **Não precisa ser executado**, pois `server.mjs` já cria as tabelas ao iniciar.
-- `usuarios-exemplo.json` — cinco usuários **inteiramente fictícios**, sem senhas. É apenas um exemplo para apresentar estruturas JSON e comparar SQL/JSON na aula. **Não é lido pelo login**, nem contém usuários reais.
+### Arquivos da atividade
 
-## Como o login já está integrado
+| Arquivo | O que faz |
+| --- | --- |
+| `modelo-site.sql` | Modelo visual com as tabelas `contas`, `sessoes` e `mensagens`. Não precisa executar. |
+| `usuarios-exemplo.json` | Cinco contas **totalmente inventadas** com uma senha de exemplo comum. É o documento didático dos usuários. |
+| `usuarios-exemplo.js` | Cópia auxiliar dos mesmos usuários, pois o navegador impede a leitura por `fetch()` de JSON local (`file://`). |
+| `autenticacao-local.js` | Demonstra cadastro, login, sessão e saída usando o armazenamento deste navegador. |
+| `../index.html` | **Somente** adicionados dois scripts auxiliares, sem mudar a estrutura visual nem o jogo. |
+| `../script.js` | Adicionado modo local quando a página é aberta diretamente; a integração com servidor foi preservada. |
 
-1. **`../index.html`**: abre a janela Entrar/Criar conta.
-2. **`../script.js`**: envia os dados às rotas da API, consulta a conta conectada e atualiza a interface.
-3. **`../server.mjs`**: valida os dados no servidor e lê/grava a tabela `contas` no **SQLite**.
-4. **Tabela `sessoes`**: armazena o hash do token da sessão e permite verificar se o usuário está conectado.
-5. **Pasta `demo/`** (quando for adicionada): o servidor exige sessão ativa para permitir acesso à demo local.
+### Teste na aula: sem servidor
 
-**Importante:** este projeto já possui uma integração real com banco de dados. Conectar o login ao `usuarios-exemplo.json` substituiria uma implementação mais adequada por uma lista pública de contas. Por isso, o JSON fica apenas para demonstração.
+1. Abra `index.html` com dois cliques ou pelo VSCode.
+2. Clique no botão **Entrar** do cabeçalho.
+3. Experimente um usuário fictício presente no JSON: **ana@neymarworld.example**, senha **neymar123**.
+4. Clique em **Sair da conta**, depois em **Criar conta**.
+5. Cadastre outro nome, e-mail e senha fictícios de pelo menos oito caracteres.
+6. O usuário aparece conectado imediatamente. Após sair, pode voltar a entrar com os mesmos dados **no mesmo navegador**.
 
-## O banco do site não é o jogo
+**Importante:** novos cadastros são salvos somente no **localStorage** deste navegador. Eles **NÃO são adicionados automaticamente ao arquivo JSON**: um arquivo JSON estático não pode ser editado por uma página HTML aberta localmente. O JSON funciona como lista inicial de cinco exemplos (espelhada no JS auxiliar).
 
-- **Site**: `index.html`, `style.css`, `script.js`, `server.mjs`, formulários de conta, mensagens e arquivos de mídia usados na apresentação.
-- **Jogo**: eventual exportação em `demo/` e seus recursos próprios; não foram modificados.
+### Acesso ao jogo / botão de download
 
-## Como testar na máquina do aluno
+O campo `linkDemo` em `../configuracao.js` está **vazio** no repositório examinado. Assim, clicar em **Entrar na demo** apenas mostra informações do jogo. Quando o aluno tiver o arquivo/link do jogo, poderá configurá-lo separadamente. Neste exemplo, o site pode **pedir login antes de abrir um link**, mas o link ou arquivo público não fica realmente protegido: alguém com o endereço direto poderá acessá-lo.
 
-O cadastro/login da V3 **não funciona abrindo apenas `index.html` por `file://`**. Ele precisa do servidor que já vem com o projeto:
+**Não usar dados nem senhas reais.** O JSON e os códigos públicos contêm credenciais de TESTE. O armazenamento local é uma simulação pedagógica, não autenticação segura.
 
-1. Abra no VSCode a pasta `neymar-world-v3/neymar-world-v3` que contém `package.json`.
-2. Se o Node.js compatível já estiver instalado, execute `npm.cmd start` no terminal do Windows.
-3. Acesse `http://localhost:3000`, clique em **Entrar** e crie uma conta fictícia.
-4. Ao concluir, o site utiliza `/api/conta/cadastro`, cria o registro SQLite e estabelece uma sessão. O login posterior usa `/api/conta/entrar`.
-5. A rota `/api/conta` informa se existe usuário conectado. A opção **Sair** usa `/api/conta/sair`.
+### Sobre o SQLite da V3
 
-O arquivo de banco gerado pelo servidor fica, por padrão, em `../dados/mensagens.sqlite`. Ele é **privado** e não deve ser enviado ao GitHub.
+Quando aberto pelo servidor Node do aluno, o site **continua usando** `server.mjs` e o SQLite para cadastro, login e mensagens, como antes. Esse banco real é separado dos dados demonstrativos locais e continua sem qualquer modificação nesta atividade.
 
-**Não colocar senhas, mensagens pessoais, chaves de API ou banco real no repositório público.**
+### Escopo preservado
+
+Nenhum arquivo ou código do jogo foi modificado. Não alteramos `server.mjs`, imagens, sons, vídeos ou arquivos da demo. O arquivo SQL é apenas documental e não interfere nos registros existentes.
