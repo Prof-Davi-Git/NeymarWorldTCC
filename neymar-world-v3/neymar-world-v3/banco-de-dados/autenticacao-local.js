@@ -1,8 +1,4 @@
-/* ATUALIZAÇÃO 18/11 - LOGIN LOCAL DIDÁTICO SEM SERVIDOR
- * Para abrir index.html por file://. O JSON é o modelo e sua cópia JS permite leitura
- * local; novos cadastros NÃO são escritos no JSON: ficam neste navegador.
- * NÃO protege downloads e NÃO pode receber dados/senhas reais.
- */
+
 (function () {
   "use strict";
   const chave = "neymar_world_contas_demo_v1";
