@@ -1,50 +1,65 @@
--- ATIVIDADE DE BANCO DE DADOS — NEYMAR WORLD V3
--- Modelo DOCUMENTAL do banco do SITE (não é código do jogo).
--- Baseado nas tabelas que server.mjs já cria automaticamente em SQLite.
--- NÃO é necessário executar este arquivo para o login funcionar.
--- NÃO coloque senhas em texto puro nem sobrescreva dados de contas existentes.
+-- ATUALIZAÇÃO 19/11 — NEYMAR WORLD V3: BANCO VISUAL DO SITE (MySQL)
+-- Arquivo didático para executar no MySQL, separado do jogo e do login local.
+-- Não é usado pelo index.html nem substitui o SQLite do servidor Node.
+-- Execute em um banco de TESTE, nunca com informações pessoais verdadeiras.
 
-PRAGMA foreign_keys = ON;
+CREATE DATABASE IF NOT EXISTS neymar_world_site
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 
--- Contas cadastradas pela página index.html
+USE neymar_world_site;
+
+-- 1. Contas do site: corresponde conceitualmente ao cadastro do jogador
 CREATE TABLE IF NOT EXISTS contas (
-  id TEXT PRIMARY KEY,
-  nome TEXT NOT NULL,
-  email TEXT UNIQUE NOT NULL,
-  senha_salt BLOB NOT NULL,
-  senha_hash BLOB NOT NULL,
-  criada_em TEXT NOT NULL
-);
+  id VARCHAR(36) NOT NULL,
+  nome VARCHAR(80) NOT NULL,
+  email VARCHAR(254) NOT NULL,
+  senha_salt VARBINARY(16) NOT NULL,
+  senha_hash VARBINARY(64) NOT NULL,
+  criada_em VARCHAR(35) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_contas_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Sessões dos usuários que estão conectados
+-- 2. Sessões de login
 CREATE TABLE IF NOT EXISTS sessoes (
-  token_hash TEXT PRIMARY KEY,
-  conta_id TEXT NOT NULL REFERENCES contas(id) ON DELETE CASCADE,
-  expira_em INTEGER NOT NULL
-);
+  token_hash VARCHAR(64) NOT NULL,
+  conta_id VARCHAR(36) NOT NULL,
+  expira_em BIGINT NOT NULL,
+  PRIMARY KEY (token_hash),
+  KEY idx_sessoes_expiracao (expira_em),
+  CONSTRAINT fk_sessoes_conta
+    FOREIGN KEY (conta_id) REFERENCES contas(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_sessoes_expiracao
-  ON sessoes (expira_em);
-
--- Sugestões e contatos enviados pelo site
+-- 3. Contatos e sugestões recebidos pelo site
 CREATE TABLE IF NOT EXISTS mensagens (
-  id TEXT PRIMARY KEY,
-  chave TEXT UNIQUE,
-  tipo TEXT NOT NULL,
-  nome TEXT NOT NULL,
-  email TEXT NOT NULL,
-  personagem TEXT NOT NULL,
+  id VARCHAR(36) NOT NULL,
+  chave VARCHAR(100) NULL,
+  tipo VARCHAR(20) NOT NULL,
+  nome VARCHAR(80) NOT NULL,
+  email VARCHAR(254) NOT NULL,
+  personagem VARCHAR(120) NOT NULL,
   mensagem TEXT NOT NULL,
-  recebida_em TEXT NOT NULL,
-  estado TEXT NOT NULL DEFAULT 'pendente',
-  tentativas INTEGER NOT NULL DEFAULT 0,
-  proxima_tentativa INTEGER NOT NULL
-);
+  recebida_em VARCHAR(35) NOT NULL,
+  estado VARCHAR(20) NOT NULL DEFAULT 'pendente',
+  tentativas INT NOT NULL DEFAULT 0,
+  proxima_tentativa BIGINT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_mensagens_chave (chave),
+  KEY idx_notificacoes (proxima_tentativa)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_notificacoes
-  ON mensagens (proxima_tentativa) WHERE estado = 'pendente';
+-- Consultas ilustrativas para a apresentação do TCC
+SHOW TABLES;
+DESCRIBE contas;
+DESCRIBE sessoes;
+DESCRIBE mensagens;
 
--- CONSULTAS DIDÁTICAS (somente leitura)
 SELECT id, nome, email, criada_em FROM contas;
 SELECT conta_id, expira_em FROM sessoes;
 SELECT tipo, nome, personagem, recebida_em, estado FROM mensagens;
+
+-- Os usuários do arquivo usuarios-exemplo.json não aparecem aqui
+-- automaticamente. JSON e MySQL são demonstrações independentes.
+-- Não inserir senha em texto puro nas colunas senha_hash/senha_salt.
