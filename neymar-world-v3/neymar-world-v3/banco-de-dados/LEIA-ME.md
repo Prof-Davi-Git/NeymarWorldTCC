@@ -1,5 +1,11 @@
 # Banco de Dados do SITE — Neymar World V3
 
+## ATUALIZAÇÃO 19/11 — Correção para executar no MySQL
+
+O arquivo `modelo-site.sql` foi adaptado para **MySQL**: identificadores `VARCHAR` em vez de `TEXT PRIMARY KEY`, campos `VARBINARY` no lugar de `BLOB` em chaves, e índices declarados de forma compatível. Retirei o comando `PRAGMA`, exclusivo do SQLite. Rode somente o arquivo `modelo-site.sql` no ambiente MySQL.
+
+O MySQL cria o banco `neymar_world_site` com três tabelas de **demonstração**; o `SELECT` pode aparecer vazio inicialmente, o que é esperado. As contas do JSON e os cadastros do navegador **não são inseridos nesse banco automaticamente**. O banco do servidor Node segue sendo SQLite, sem nenhuma alteração.
+
 ## ATUALIZAÇÃO 18/11 — Demonstração sem servidor
 
 **Correção de login:** agora o site detecta quando foi aberto pelo **Live Server** do VSCode (ou hospedagem apenas estática) e utiliza o login local do JSON. Antes ele tentava a API `/api/conta` inexistente nesse modo e mostrava erro. Quando a API do servidor Node está disponível, o login original com SQLite permanece ativo.
@@ -11,7 +17,8 @@ Esta atividade foi feita para o professor abrir **index.html diretamente**, sem 
 
 | Arquivo | O que faz |
 | --- | --- |
-| `modelo-site.sql` | Modelo visual com as tabelas `contas`, `sessoes` e `mensagens`. Não precisa executar. |
+| `modelo-site.sql` | **Modelo MySQL executável**, com tabelas `contas`, `sessoes` e `mensagens`, para demonstração em aula. Não é usado pelo login do site. |
+| `modelo-site-sqlite.sql` | Cópia do modelo SQLite original para comparar os tipos de dados. Não execute no MySQL. |
 | `usuarios-exemplo.json` | Cinco contas **totalmente inventadas** com uma senha de exemplo comum. É o documento didático dos usuários. |
 | `usuarios-exemplo.js` | Cópia auxiliar dos mesmos usuários, pois o navegador impede a leitura por `fetch()` de JSON local (`file://`). |
 | `autenticacao-local.js` | Demonstra cadastro, login, sessão e saída usando o armazenamento deste navegador. |
