@@ -1,5 +1,7 @@
 /* ATUALIZAÇÃO 18/11 - Usuários fictícios espelhados do JSON para abrir index.html por file://.
  * Este arquivo NÃO é segurança real e nunca deve receber dados verdadeiros. */
+
+
 window.NW_USUARIOS_FICTICIOS = [
   {
     "id": "exemplo-1",
