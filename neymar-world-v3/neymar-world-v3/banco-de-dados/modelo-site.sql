@@ -1,50 +1,33 @@
--- ATIVIDADE DE BANCO DE DADOS — NEYMAR WORLD V3
--- Modelo DOCUMENTAL do banco do SITE (não é código do jogo).
--- Baseado nas tabelas que server.mjs já cria automaticamente em SQLite.
--- NÃO é necessário executar este arquivo para o login funcionar.
--- NÃO coloque senhas em texto puro nem sobrescreva dados de contas existentes.
+-- ATUALIZAÇÃO 19/11 — NEYMAR WORLD V3 / BANCO VISUAL DE USUÁRIOS (MySQL)
+-- Contém APENAS a tabela usuarios, com os 5 usuários fictícios do JSON.
+-- Arquivo para atividade no MySQL. Não controla o login do index.html.
+-- Senhas abaixo são exclusivamente de TESTE; nunca use senhas reais assim.
 
-PRAGMA foreign_keys = ON;
+CREATE DATABASE IF NOT EXISTS neymar_world_site
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 
--- Contas cadastradas pela página index.html
-CREATE TABLE IF NOT EXISTS contas (
-  id TEXT PRIMARY KEY,
-  nome TEXT NOT NULL,
-  email TEXT UNIQUE NOT NULL,
-  senha_salt BLOB NOT NULL,
-  senha_hash BLOB NOT NULL,
-  criada_em TEXT NOT NULL
-);
+USE neymar_world_site;
 
--- Sessões dos usuários que estão conectados
-CREATE TABLE IF NOT EXISTS sessoes (
-  token_hash TEXT PRIMARY KEY,
-  conta_id TEXT NOT NULL REFERENCES contas(id) ON DELETE CASCADE,
-  expira_em INTEGER NOT NULL
-);
+CREATE TABLE IF NOT EXISTS usuarios (
+  id VARCHAR(36) NOT NULL PRIMARY KEY,
+  nome VARCHAR(80) NOT NULL,
+  email VARCHAR(254) NOT NULL UNIQUE,
+  senha VARCHAR(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_sessoes_expiracao
-  ON sessoes (expira_em);
+-- Insere os mesmos registros de usuarios-exemplo.json.
+-- Se executar novamente, atualiza os registros com o mesmo id.
+INSERT INTO usuarios (id, nome, email, senha) VALUES
+  ('exemplo-1', 'Ana Silva', 'ana@neymarworld.example', 'neymar123'),
+  ('exemplo-2', 'Bruno Oliveira', 'bruno@neymarworld.example', 'neymar123'),
+  ('exemplo-3', 'Carla Santos', 'carla@neymarworld.example', 'neymar123'),
+  ('exemplo-4', 'Daniel Pereira', 'daniel@neymarworld.example', 'neymar123'),
+  ('exemplo-5', 'Fernanda Costa', 'fernanda@neymarworld.example', 'neymar123')
+ON DUPLICATE KEY UPDATE
+  nome = VALUES(nome),
+  email = VALUES(email),
+  senha = VALUES(senha);
 
--- Sugestões e contatos enviados pelo site
-CREATE TABLE IF NOT EXISTS mensagens (
-  id TEXT PRIMARY KEY,
-  chave TEXT UNIQUE,
-  tipo TEXT NOT NULL,
-  nome TEXT NOT NULL,
-  email TEXT NOT NULL,
-  personagem TEXT NOT NULL,
-  mensagem TEXT NOT NULL,
-  recebida_em TEXT NOT NULL,
-  estado TEXT NOT NULL DEFAULT 'pendente',
-  tentativas INTEGER NOT NULL DEFAULT 0,
-  proxima_tentativa INTEGER NOT NULL
-);
-
-CREATE INDEX IF NOT EXISTS idx_notificacoes
-  ON mensagens (proxima_tentativa) WHERE estado = 'pendente';
-
--- CONSULTAS DIDÁTICAS (somente leitura)
-SELECT id, nome, email, criada_em FROM contas;
-SELECT conta_id, expira_em FROM sessoes;
-SELECT tipo, nome, personagem, recebida_em, estado FROM mensagens;
+-- Visualizar os cinco registros na tabela:
+SELECT id, nome, email, senha FROM usuarios;
