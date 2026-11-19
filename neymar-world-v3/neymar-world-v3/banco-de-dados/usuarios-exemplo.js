@@ -3,31 +3,31 @@
 window.NW_USUARIOS_FICTICIOS = [
   {
     "id": "exemplo-1",
-    "nome": "Ana Exemplo",
+    "nome": "Ana Silva",
     "email": "ana@neymarworld.example",
     "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-2",
-    "nome": "Bruno Exemplo",
+    "nome": "Bruno Oliveira",
     "email": "bruno@neymarworld.example",
     "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-3",
-    "nome": "Carla Exemplo",
+    "nome": "Carla Santos",
     "email": "carla@neymarworld.example",
     "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-4",
-    "nome": "Daniel Exemplo",
+    "nome": "Daniel Pereira",
     "email": "daniel@neymarworld.example",
     "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-5",
-    "nome": "Fernanda Exemplo",
+    "nome": "Fernanda Costa",
     "email": "fernanda@neymarworld.example",
     "senhaDemo": "neymar123"
   }
