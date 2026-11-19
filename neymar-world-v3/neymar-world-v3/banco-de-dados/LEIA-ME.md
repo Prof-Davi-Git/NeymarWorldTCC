@@ -1,51 +1,28 @@
 # Banco de Dados do SITE — Neymar World V3
 
-## ATUALIZAÇÃO 19/11 — Correção para executar no MySQL
+## ATUALIZAÇÃO 19/11 — Somente a tabela usuarios
 
-O arquivo `modelo-site.sql` foi adaptado para **MySQL**: identificadores `VARCHAR` em vez de `TEXT PRIMARY KEY`, campos `VARBINARY` no lugar de `BLOB` em chaves, e índices declarados de forma compatível. Retirei o comando `PRAGMA`, exclusivo do SQLite. Rode somente o arquivo `modelo-site.sql` no ambiente MySQL.
+O arquivo **`modelo-site.sql`** agora contém **apenas uma tabela: `usuarios`**, com quatro colunas (`id`, `nome`, `email`, `senha`). Ele cria o banco MySQL `neymar_world_site`, cria essa tabela, inclui os **cinco usuários fictícios do arquivo `usuarios-exemplo.json` com `INSERT INTO`** e executa um `SELECT` para visualizar os registros.
 
-O MySQL cria o banco `neymar_world_site` com três tabelas de **demonstração**; o `SELECT` pode aparecer vazio inicialmente, o que é esperado. As contas do JSON e os cadastros do navegador **não são inseridos nesse banco automaticamente**. O banco do servidor Node segue sendo SQLite, sem nenhuma alteração.
+Execute **`modelo-site.sql`** no ambiente MySQL. Ao rodar o script novamente, ele atualiza os usuários com os mesmos identificadores, em vez de falhar por duplicidade.
 
-## ATUALIZAÇÃO 18/11 — Demonstração sem servidor
+Os e-mails de demonstração usam o domínio `.example`. A senha `neymar123` aparece em texto no JSON e no SQL **somente para a simulação escolar**; nunca utilize esse método para contas reais. A tabela visual **não está ligada** ao login do site, que, ao abrir `index.html` diretamente ou no Live Server, utiliza `usuarios-exemplo.js` e os cadastros locais do navegador. Um novo cadastro não altera o JSON nem o MySQL.
 
-**Correção de login:** agora o site detecta quando foi aberto pelo **Live Server** do VSCode (ou hospedagem apenas estática) e utiliza o login local do JSON. Antes ele tentava a API `/api/conta` inexistente nesse modo e mostrava erro. Quando a API do servidor Node está disponível, o login original com SQLite permanece ativo.
+**Observação:** se você já executou a versão antiga de `modelo-site.sql`, as tabelas antigas `contas`, `sessoes` e `mensagens` podem continuar no seu MySQL. O novo arquivo não cria nem apaga essas tabelas, para não excluir dados inadvertidamente. Elas podem ser removidas separadamente se você confirmar que são apenas tabelas de teste.
 
+## Arquivos da demonstração
 
-Esta atividade foi feita para o professor abrir **index.html diretamente**, sem terminal, instalação ou comandos. A **V3 original também possui um servidor real**, mas o modo demonstrativo não depende dele.
+- `modelo-site.sql`: **única tabela MySQL exigida para a atividade**, `usuarios`, e cinco registros por `INSERT INTO`.
+- `usuarios-exemplo.json`: cinco usuários de demonstração, com nomes comuns, e-mails e a senha fictícia.
+- `usuarios-exemplo.js`: cópia auxiliar para autenticação demonstrativa ao abrir arquivos locais.
+- `autenticacao-local.js`: valida contas fictícias e mantém cadastros adicionais apenas neste navegador.
+- `modelo-site-sqlite.sql`: **referência antiga** do projeto SQLite, não utilizar nesta atividade MySQL.
 
-### Arquivos da atividade
+## Teste rápido
 
-| Arquivo | O que faz |
-| --- | --- |
-| `modelo-site.sql` | **Modelo MySQL executável**, com tabelas `contas`, `sessoes` e `mensagens`, para demonstração em aula. Não é usado pelo login do site. |
-| `modelo-site-sqlite.sql` | Cópia do modelo SQLite original para comparar os tipos de dados. Não execute no MySQL. |
-| `usuarios-exemplo.json` | Cinco contas **totalmente inventadas** com uma senha de exemplo comum. É o documento didático dos usuários. |
-| `usuarios-exemplo.js` | Cópia auxiliar dos mesmos usuários, pois o navegador impede a leitura por `fetch()` de JSON local (`file://`). |
-| `autenticacao-local.js` | Demonstra cadastro, login, sessão e saída usando o armazenamento deste navegador. |
-| `../index.html` | **Somente** adicionados dois scripts auxiliares, sem mudar a estrutura visual nem o jogo. |
-| `../script.js` | Adicionado modo local quando a página é aberta diretamente; a integração com servidor foi preservada. |
+1. Faça Pull do repositório.
+2. Execute `modelo-site.sql` na ferramenta MySQL.
+3. Rode `SELECT * FROM neymar_world_site.usuarios;` e confira os cinco nomes e e-mails.
+4. Para testar login, abra `../index.html` e use, por exemplo, `ana@neymarworld.example` com senha `neymar123`. Esse login é demonstrativo e separado da tabela MySQL.
 
-### Teste na aula: sem servidor
-
-1. Abra `index.html` com dois cliques ou pelo VSCode.
-2. Clique no botão **Entrar** do cabeçalho.
-3. Experimente um usuário fictício presente no JSON: **ana@neymarworld.example**, senha **neymar123**.
-4. Clique em **Sair da conta**, depois em **Criar conta**.
-5. Cadastre outro nome, e-mail e senha fictícios de pelo menos oito caracteres.
-6. O usuário aparece conectado imediatamente. Após sair, pode voltar a entrar com os mesmos dados **no mesmo navegador**.
-
-**Importante:** novos cadastros são salvos somente no **localStorage** deste navegador. Eles **NÃO são adicionados automaticamente ao arquivo JSON**: um arquivo JSON estático não pode ser editado por uma página HTML aberta localmente. O JSON funciona como lista inicial de cinco exemplos (espelhada no JS auxiliar).
-
-### Acesso ao jogo / botão de download
-
-O campo `linkDemo` em `../configuracao.js` está **vazio** no repositório examinado. Assim, clicar em **Entrar na demo** apenas mostra informações do jogo. Quando o aluno tiver o arquivo/link do jogo, poderá configurá-lo separadamente. Neste exemplo, o site pode **pedir login antes de abrir um link**, mas o link ou arquivo público não fica realmente protegido: alguém com o endereço direto poderá acessá-lo.
-
-**Não usar dados nem senhas reais.** O JSON e os códigos públicos contêm credenciais de TESTE. O armazenamento local é uma simulação pedagógica, não autenticação segura.
-
-### Sobre o SQLite da V3
-
-Quando aberto pelo servidor Node do aluno, o site **continua usando** `server.mjs` e o SQLite para cadastro, login e mensagens, como antes. Esse banco real é separado dos dados demonstrativos locais e continua sem qualquer modificação nesta atividade.
-
-### Escopo preservado
-
-Nenhum arquivo ou código do jogo foi modificado. Não alteramos `server.mjs`, imagens, sons, vídeos ou arquivos da demo. O arquivo SQL é apenas documental e não interfere nos registros existentes.
+Nenhum arquivo do jogo, código de interface, `script.js` ou servidor `server.mjs` foi alterado nesta atualização.
