@@ -2,26 +2,31 @@
   {
     "id": "exemplo-1",
     "nome": "Ana Exemplo",
-    "email": "ana@neymarworld.example"
+    "email": "ana@neymarworld.example",
+    "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-2",
     "nome": "Bruno Exemplo",
-    "email": "bruno@neymarworld.example"
+    "email": "bruno@neymarworld.example",
+    "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-3",
     "nome": "Carla Exemplo",
-    "email": "carla@neymarworld.example"
+    "email": "carla@neymarworld.example",
+    "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-4",
     "nome": "Daniel Exemplo",
-    "email": "daniel@neymarworld.example"
+    "email": "daniel@neymarworld.example",
+    "senhaDemo": "neymar123"
   },
   {
     "id": "exemplo-5",
     "nome": "Fernanda Exemplo",
-    "email": "fernanda@neymarworld.example"
+    "email": "fernanda@neymarworld.example",
+    "senhaDemo": "neymar123"
   }
 ]
