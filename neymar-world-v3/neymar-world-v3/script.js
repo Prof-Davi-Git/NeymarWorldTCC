@@ -611,11 +611,11 @@ accountForms.forEach((form) => {
     if (!saved) return;
 
     form.reset();
-    if (demoRequested && accountDialog.open && accountUser && config.linkDemo.trim()) {
-      window.location.assign(config.linkDemo.trim());
-    } else if (accountDialog.open) {
-      accountLogout.focus();
-    }
+    // ATUALIZAÇÃO 18/11 - após entrar ou cadastrar, voltar à página inicial.
+    // Os dados da conta continuam disponíveis ao clicar em "Minha conta".
+    demoRequested = false;
+    if (accountDialog.open) accountDialog.close();
+    window.scrollTo({ top: 0, behavior: "instant" });
   });
 });
 
