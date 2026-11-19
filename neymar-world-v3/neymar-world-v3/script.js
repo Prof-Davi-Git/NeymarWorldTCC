@@ -72,7 +72,7 @@ async function enterDemo(trigger) {
     showAccount(trigger, true);
     if (!available) {
       setAccountStatus(location.protocol === "file:"
-        ? "Abra o site pelo servidor para criar uma conta ou entrar."
+        ? "Entre ou crie uma conta fictícia neste navegador."
         : "Não foi possível conectar ao servidor. Tente novamente.", "error");
     }
   } finally {
@@ -100,7 +100,7 @@ document.addEventListener("click", (event) => {
     checkAccount().then((available) => {
       if (!available && accountDialog.open) {
         setAccountStatus(location.protocol === "file:"
-          ? "Abra o site pelo servidor para criar uma conta ou entrar."
+          ? "Entre ou crie uma conta fictícia neste navegador."
           : "Não foi possível conectar ao servidor. Tente novamente.", "error");
       }
     });
@@ -482,7 +482,12 @@ function showAccount(trigger, wantsDemo) {
 }
 
 function checkAccount() {
-  if (location.protocol === "file:") return Promise.resolve(false);
+  // ATUALIZAÇÃO 18/11: abrir index.html direto utiliza apenas a demonstração local.
+  if (location.protocol === "file:") {
+    accountUser = window.NW_AUTH_LOCAL?.current() || null;
+    renderAccount();
+    return Promise.resolve(true);
+  }
   if (accountCheck) return accountCheck;
 
   accountCheck = fetch("/api/conta", { cache: "no-store" })
@@ -520,9 +525,26 @@ const accountErrors = {
 
 async function updateAccount(path, fields, controls, success) {
   if (accountBusy) return false;
+  // ATUALIZAÇÃO 18/11: o formulário original é preservado; só muda a
+  // origem dos dados quando index.html é aberto diretamente pelo navegador.
   if (location.protocol === "file:") {
-    setAccountStatus("Abra o site pelo servidor para criar uma conta ou entrar.", "error");
-    return false;
+    accountBusy = true;
+    controls.forEach(control => { control.disabled = true; });
+    try {
+      const result = window.NW_AUTH_LOCAL?.run(path, fields);
+      if (!result?.ok) {
+        setAccountStatus(accountErrors[result?.code] ||
+          "Não foi possível acessar a conta fictícia.", "error");
+        return false;
+      }
+      accountUser = result.usuario;
+      renderAccount();
+      setAccountStatus(success, "success");
+      return true;
+    } finally {
+      accountBusy = false;
+      controls.forEach(control => { control.disabled = false; });
+    }
   }
 
   accountBusy = true;
